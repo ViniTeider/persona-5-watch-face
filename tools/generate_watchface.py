@@ -28,7 +28,7 @@ BACKGROUND_SIZE = 480
 
 CANVAS = (835, 653)
 CALENDAR_SCALE, CALENDAR_X, CALENDAR_Y = 0.36, 56, 34
-TOD_SCALE, TOD_X, TOD_Y = 0.27, 169, 250
+TOD_SCALE, TOD_X, TOD_Y = 0.28, 274, 33
 
 # Version 1 of the art is black-on-white stickers for the light background.
 NIGHT, DAY = 0, 1
@@ -49,8 +49,8 @@ CYAN, MAGENTA, YELLOW = "#ff00e5ff", "#ffff3dc8", "#ffffe600"
 DIGIT_SIZE = 94
 GLYPHS = "0123456789:"
 CLOCK_ANGLE = -4
-CLOCK_Y, CLOCK_SPLIT = 198, 248  # Hours end at the split, minutes start there.
-STATUS_X, STATUS_Y, STATUS_W, STATUS_H = 56, 306, 338, 50
+CLOCK_Y, CLOCK_SPLIT = 218, 248  # Hours end at the split, minutes start there.
+STATUS_X, STATUS_Y, STATUS_W, STATUS_H = 56, 324, 338, 50
 
 resource_count = 0
 
@@ -340,7 +340,7 @@ def main():
             <Group name="ambient_clock" {full} angle="{CLOCK_ANGLE}">
             {clock("p5_clock_ambient", "p5_clock_ambient", ambient_height, ambient_y)}
             </Group>
-            <PartText x="75" y="310" width="300" height="40">
+            <PartText x="75" y="{CLOCK_Y + 112}" width="300" height="40">
                 <Text align="CENTER">
                     <Font family="markin_lt_ultrabold" size="28" color="#ffffffff">
                         <Template>%s/%s %s<Parameter expression="[MONTH]" /><Parameter expression="[DAY]" /><Parameter expression="[DAY_OF_WEEK_S]" /></Template>
