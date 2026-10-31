@@ -46,6 +46,10 @@ WHITE = (255, 255, 255, 255)
 BLACK = (10, 10, 10, 255)
 CYAN, MAGENTA, YELLOW = "#ff00e5ff", "#ffff3dc8", "#ffffe600"
 
+# Weather arrives in the unit set on the watch, where 2 means Fahrenheit.
+CELSIUS = ("[WEATHER.TEMPERATURE_UNIT] == 2 ? round(([WEATHER.TEMPERATURE] - 32.0) * 5.0 / 9.0) "
+           ": [WEATHER.TEMPERATURE]")
+
 DIGIT_SIZE = 94
 GLYPHS = "0123456789:"
 CLOCK_ANGLE = -4
@@ -293,7 +297,7 @@ def main():
     full = f'x="0" y="0" width="{FACE}" height="{FACE}"'
     hide_in_ambient = '<Variant mode="AMBIENT" target="alpha" value="0" />'
     temperature = condition(
-        [("[WEATHER.IS_AVAILABLE]", status_text(253, 68, YELLOW, '%s°<Parameter expression="[WEATHER.TEMPERATURE]" />'))],
+        [("[WEATHER.IS_AVAILABLE]", status_text(253, 68, YELLOW, f'%d°<Parameter expression="{CELSIUS}" />'))],
         status_text(253, 68, YELLOW, "--°"), 16)
 
     xml = f"""<?xml version="1.0" encoding="utf-8"?>
