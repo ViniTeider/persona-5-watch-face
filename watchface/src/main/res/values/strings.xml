@@ -1,0 +1,6 @@
+<resources>
+    <string name="watch_face_name">Persona 5 Watch Face</string>
+    <string name="weather_complication">Weather</string>
+    <string name="steps_complication">Steps</string>
+    <string name="battery_complication">Battery</string>
+</resources>

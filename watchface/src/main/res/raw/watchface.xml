@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WatchFace height="450" width="450">
+    <Metadata key="CLOCK_TYPE" value="DIGITAL" />
+
+    <Scene>
+        <Condition>
+            <Expressions>
+                <Expression name="is_day"><![CDATA[[HOUR_0_23] >= 6 && [HOUR_0_23] < 18]]></Expression>
+            </Expressions>
+            <Compare expression="is_day">
+                <PartImage height="450" width="450" x="0" y="0">
+                    <Image resource="persona_day" />
+                </PartImage>
+                <Default>
+                    <PartImage height="450" width="450" x="0" y="0">
+                        <Image resource="persona_night" />
+                    </PartImage>
+                </Default>
+            </Compare>
+        </Condition>
+
+        <PartText height="42" width="360" x="45" y="38">
+            <Text>
+                <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="32">
+                    <Template><![CDATA[%s, %s %s]]>
+                        <Parameter expression="[DAY_OF_WEEK_S]" />
+                        <Parameter expression="[MONTH_S]" />
+                        <Parameter expression="[DAY_Z]" />
+                    </Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <DigitalClock height="150" width="410" x="20" y="105">
+            <TimeText format="hh:mm" height="150" width="410" x="0" y="0">
+                <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="126" weight="NORMAL" />
+            </TimeText>
+            <TimeText alpha="0" format="hh:mm" height="150" width="410" x="0" y="0">
+                <Variant mode="AMBIENT" target="alpha" value="255" />
+                <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="126" weight="THIN" />
+            </TimeText>
+        </DigitalClock>
+
+        <PartText height="42" width="360" x="45" y="250">
+            <Text>
+                <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="30">
+                    <Template><![CDATA[%s]]>
+                        <Parameter expression="[IS_24_HOUR_MODE] == 1 ? &quot;&quot; : ([HOUR_0_23] &lt; 12 ? &quot;AM&quot; : &quot;PM&quot;)" />
+                    </Template>
+                </Font>
+            </Text>
+        </PartText>
+
+        <ComplicationSlot
+            displayName="weather_complication"
+            height="70"
+            slotId="0"
+            supportedTypes="SHORT_TEXT LONG_TEXT EMPTY"
+            width="180"
+            x="30"
+            y="305">
+            <BoundingBox height="70" width="180" x="0" y="0" />
+            <Complication type="SHORT_TEXT">
+                <PartText height="70" width="180" x="0" y="0">
+                    <Text ellipsis="TRUE">
+                        <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="24">
+                            <Template><![CDATA[%s %s]]>
+                                <Parameter expression="[COMPLICATION.TITLE]" />
+                                <Parameter expression="[COMPLICATION.TEXT]" />
+                            </Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="LONG_TEXT">
+                <PartText height="70" width="180" x="0" y="0">
+                    <Text ellipsis="TRUE">
+                        <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="20">
+                            <Template><![CDATA[%s]]>
+                                <Parameter expression="[COMPLICATION.TEXT]" />
+                            </Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+        </ComplicationSlot>
+
+        <ComplicationSlot
+            displayName="steps_complication"
+            height="70"
+            slotId="1"
+            supportedTypes="SHORT_TEXT LONG_TEXT RANGED_VALUE GOAL_PROGRESS EMPTY"
+            width="110"
+            x="220"
+            y="305">
+            <BoundingBox height="70" width="110" x="0" y="0" />
+            <Complication type="SHORT_TEXT">
+                <PartText height="70" width="110" x="0" y="0">
+                    <Text ellipsis="TRUE">
+                        <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="22">
+                            <Template><![CDATA[%s]]>
+                                <Parameter expression="[COMPLICATION.TEXT]" />
+                            </Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+            <Complication type="LONG_TEXT">
+                <PartText height="70" width="110" x="0" y="0">
+                    <Text ellipsis="TRUE">
+                        <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="18">
+                            <Template><![CDATA[%s]]>
+                                <Parameter expression="[COMPLICATION.TEXT]" />
+                            </Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+        </ComplicationSlot>
+
+        <ComplicationSlot
+            displayName="battery_complication"
+            height="50"
+            slotId="2"
+            supportedTypes="SHORT_TEXT RANGED_VALUE EMPTY"
+            width="160"
+            x="145"
+            y="382">
+            <BoundingBox height="50" width="160" x="0" y="0" />
+            <Complication type="SHORT_TEXT">
+                <PartText height="50" width="160" x="0" y="0">
+                    <Text ellipsis="TRUE">
+                        <Font color="#ffffffff" family="Persona 5 Menu Font Prototype" size="20">
+                            <Template><![CDATA[BATTERY %s]]>
+                                <Parameter expression="[COMPLICATION.TEXT]" />
+                            </Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Complication>
+        </ComplicationSlot>
+    </Scene>
+</WatchFace>
