@@ -25,6 +25,7 @@ FACE = 450
 RENDER = 2  # Bitmaps are stored at 2x so they stay sharp on larger watches.
 SAFE_RADIUS = 221
 BACKGROUND_SIZE = 480
+NIGHT_BLACK_POINT = 24
 
 CANVAS = (835, 653)
 CALENDAR_SCALE, CALENDAR_X, CALENDAR_Y = 0.36, 56, 34
@@ -187,13 +188,21 @@ def time_of_day(v):
     return condition([(e, images[t]) for t, e in TOD_HOURS], images[1])
 
 
-def background(name, source):
-    """Takes a square crop of the portrait art, keeping the skyline below the middle."""
+def background(name, source, black_point=0):
+    """Takes a square crop of the portrait art, keeping the skyline below the middle.
+
+    Values at or below black_point become pure black, which turns OLED pixels off.
+    """
     image = Image.open(SOURCE / source).convert("RGB")
     side = image.width
     top = round(image.height * 0.22)
-    image.crop((0, top, side, top + side)).resize((BACKGROUND_SIZE,) * 2, Image.LANCZOS).save(
-        OUT / f"{name}.jpg", quality=90, optimize=True)
+    image = image.crop((0, top, side, top + side)).resize((BACKGROUND_SIZE,) * 2, Image.LANCZOS)
+    if black_point:
+        scale = 255 / (255 - black_point)
+        # PNG, because JPEG noise would light up the pure black pixels again.
+        image.point(lambda v: max(0, round((v - black_point) * scale))).save(OUT / f"{name}.png", optimize=True)
+    else:
+        image.save(OUT / f"{name}.jpg", quality=90, optimize=True)
     return f'<PartImage x="0" y="0" width="{FACE}" height="{FACE}"><Image resource="{name}" /></PartImage>'
 
 
@@ -286,7 +295,7 @@ def main():
         path.unlink()
 
     day_background = background("p5_bg_day", "persona_day.jpg")
-    night_background = background("p5_bg_night", "persona_night.jpg")
+    night_background = background("p5_bg_night", "persona_night.jpg", NIGHT_BLACK_POINT)
     hours_font, digit_height = glyph_font("p5_clock_hours", WHITE, BLACK, RED, 6, 5, 3)
     minutes_font, _ = glyph_font("p5_clock_minutes", RED, BLACK, WHITE, 6, 5, 3)
     ambient_font, ambient_height = glyph_font("p5_clock_ambient", BLACK, WHITE, None, 3, 0, 0)
@@ -332,7 +341,7 @@ def main():
             <Group name="status" x="{STATUS_X}" y="{STATUS_Y}" width="{STATUS_W}" height="{STATUS_H}" angle="-3">
                 {status_bar()}
                 {status_text(62, 72, CYAN, '%s%%<Parameter expression="[BATTERY_PERCENT]" />')}
-                {status_text(165, 84, MAGENTA, '%s<Parameter expression="[STEP_COUNT]" />')}
+                {status_text(165, 84, MAGENTA, '%d<Parameter expression="[STEP_COUNT]" />')}
 {temperature}
             </Group>
             <Group name="clock" {full} angle="{CLOCK_ANGLE}">

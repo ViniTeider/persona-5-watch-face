@@ -1192,7 +1192,7 @@
             <Group name="status" x="56" y="324" width="338" height="50" angle="-3">
                 <PartImage x="0" y="0" width="338" height="50"><Image resource="p5_status_bar" /></PartImage>
                 <PartText x="62" y="6" width="72" height="32"><Text align="START"><Font family="markin_lt_ultrabold" size="23" color="#ff00e5ff"><Template>%s%%<Parameter expression="[BATTERY_PERCENT]" /></Template></Font></Text></PartText>
-                <PartText x="165" y="6" width="84" height="32"><Text align="START"><Font family="markin_lt_ultrabold" size="23" color="#ffff3dc8"><Template>%s<Parameter expression="[STEP_COUNT]" /></Template></Font></Text></PartText>
+                <PartText x="165" y="6" width="84" height="32"><Text align="START"><Font family="markin_lt_ultrabold" size="23" color="#ffff3dc8"><Template>%d<Parameter expression="[STEP_COUNT]" /></Template></Font></Text></PartText>
                 <Condition>
                     <Expressions>
                         <Expression name="c0">[WEATHER.IS_AVAILABLE]</Expression>
