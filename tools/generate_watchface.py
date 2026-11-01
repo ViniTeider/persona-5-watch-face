@@ -341,7 +341,7 @@ def main():
             <Group name="status" x="{STATUS_X}" y="{STATUS_Y}" width="{STATUS_W}" height="{STATUS_H}" angle="-3">
                 {status_bar()}
                 {status_text(62, 72, CYAN, '%s%%<Parameter expression="[BATTERY_PERCENT]" />')}
-                {status_text(165, 84, MAGENTA, '%s<Parameter expression="[STEP_COUNT]" />')}
+                {status_text(165, 84, MAGENTA, '%d<Parameter expression="[STEP_COUNT]" />')}
 {temperature}
             </Group>
             <Group name="clock" {full} angle="{CLOCK_ANGLE}">
