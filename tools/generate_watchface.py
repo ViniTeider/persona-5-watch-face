@@ -26,6 +26,8 @@ RENDER = 2  # Bitmaps are stored at 2x so they stay sharp on larger watches.
 SAFE_RADIUS = 221
 BACKGROUND_SIZE = 480
 NIGHT_BLACK_POINT = 24
+XIAOMI_STEPS = ("com.xiaomi.miwear.watchface/"
+                "com.xiaomi.miwear.watchface.complication.health.vigor.StepComplicationDataSource")
 
 CANVAS = (835, 653)
 CALENDAR_SCALE, CALENDAR_X, CALENDAR_Y = 0.36, 56, 34
@@ -282,10 +284,23 @@ def status_bar():
     return part("p5_status_bar", 0, 0, STATUS_W, STATUS_H)
 
 
-def status_text(x, w, color, template):
-    return (f'<PartText x="{x}" y="6" width="{w}" height="32"><Text align="START">'
+def status_text(x, w, color, template, y=6):
+    return (f'<PartText x="{x}" y="{y}" width="{w}" height="32"><Text align="START">'
             f'<Font family="markin_lt_ultrabold" size="23" color="{color}"><Template>{template}</Template></Font>'
             f'</Text></PartText>')
+
+
+def steps_slot(hide_in_ambient):
+    # [STEP_COUNT] goes stale on Xiaomi watches, so prefer their own step source.
+    # The runtime only finds slots directly under Scene, so this one repeats the
+    # status bar's position and tilt instead of sitting inside its group.
+    text = status_text(0, 84, MAGENTA, '%s<Parameter expression="[COMPLICATION.TEXT]" />', 0)
+    return f"""<ComplicationSlot x="221" y="328" width="84" height="32" angle="-3" slotId="0" displayName="steps_complication" supportedTypes="SHORT_TEXT">
+            {hide_in_ambient}
+            <DefaultProviderPolicy defaultSystemProvider="STEP_COUNT" defaultSystemProviderType="SHORT_TEXT" primaryProvider="{XIAOMI_STEPS}" primaryProviderType="SHORT_TEXT" />
+            <BoundingBox x="0" y="0" width="84" height="32" />
+            <Complication type="SHORT_TEXT">{text}</Complication>
+        </ComplicationSlot>"""
 
 
 def main():
@@ -341,13 +356,13 @@ def main():
             <Group name="status" x="{STATUS_X}" y="{STATUS_Y}" width="{STATUS_W}" height="{STATUS_H}" angle="-3">
                 {status_bar()}
                 {status_text(62, 72, CYAN, '%s%%<Parameter expression="[BATTERY_PERCENT]" />')}
-                {status_text(165, 84, MAGENTA, '%d<Parameter expression="[STEP_COUNT]" />')}
 {temperature}
             </Group>
             <Group name="clock" {full} angle="{CLOCK_ANGLE}">
             {clock("p5_clock_hours", "p5_clock_minutes", digit_height)}
             </Group>
         </Group>
+        {steps_slot(hide_in_ambient)}
         <Group name="ambient" {full} alpha="0">
             <Variant mode="AMBIENT" target="alpha" value="255" />
             <Group name="ambient_clock" {full} angle="{CLOCK_ANGLE}">
