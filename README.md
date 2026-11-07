@@ -13,8 +13,8 @@ layered calendar on a city skyline, with a light theme by day and a dark theme b
 
 The light theme runs from 06:00 to 18:00 and the dark theme from 18:00 to 06:00.
 
-*Captured on the Wear OS emulator, which has no forecast or step sensor. That is why the weather tag
-shows "?" and the temperature and step count are empty or zero.*
+*Captured on the Wear OS emulator, which has no forecast. That is why the weather tag
+shows "?" and the temperature is empty.*
 
 ## Features
 
@@ -22,7 +22,7 @@ shows "?" and the temperature and step count are empty or zero.*
 - 24-hour two-colour clock with white hours and red minutes
 - Time of day art, such as "Early Morning", "Afternoon" and "Evening"
 - Weather icon and temperature, with a "?" tag while no forecast is available
-- Battery and step count
+- Battery level
 - Low-power always-on mode that shows only the clock outline and date
 
 ## Requirements
